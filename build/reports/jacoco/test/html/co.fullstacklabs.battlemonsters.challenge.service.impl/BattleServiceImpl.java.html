@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BattleServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assessment-cc-java-sr-01</a> &gt; <a href="index.source.html" class="el_package">co.fullstacklabs.battlemonsters.challenge.service.impl</a> &gt; <span class="el_source">BattleServiceImpl.java</span></div><h1>BattleServiceImpl.java</h1><pre class="source lang-java linenums">package co.fullstacklabs.battlemonsters.challenge.service.impl;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import co.fullstacklabs.battlemonsters.challenge.dto.BattleDTO;
+import co.fullstacklabs.battlemonsters.challenge.model.Battle;
+import co.fullstacklabs.battlemonsters.challenge.repository.BattleRepository;
+import co.fullstacklabs.battlemonsters.challenge.service.BattleService;
+
+/**
+ * @author FullStack Labs
+ * @version 1.0
+ * @since 2022-10
+ */
+public abstract class BattleServiceImpl implements BattleService {
+
+    private BattleRepository battleRepository;
+    private ModelMapper modelMapper;
+
+   
+    @Autowired
+<span class="nc" id="L26">    public BattleServiceImpl(BattleRepository battleRepository, ModelMapper modelMapper) {</span>
+<span class="nc" id="L27">        this.battleRepository = battleRepository;</span>
+<span class="nc" id="L28">        this.modelMapper = modelMapper;    </span>
+<span class="nc" id="L29">    }</span>
+
+    @Override
+    public List&lt;BattleDTO&gt; getAll() {
+<span class="nc" id="L33">        List&lt;Battle&gt; battles = battleRepository.findAll();</span>
+<span class="nc" id="L34">        return battles.stream().map(battle -&gt; modelMapper.map(battle, BattleDTO.class))</span>
+<span class="nc" id="L35">                .collect(Collectors.toList());</span>
+    }
+   
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

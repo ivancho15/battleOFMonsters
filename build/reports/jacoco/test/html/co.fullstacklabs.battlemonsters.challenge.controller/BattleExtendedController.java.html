@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BattleExtendedController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">assessment-cc-java-sr-01</a> &gt; <a href="index.source.html" class="el_package">co.fullstacklabs.battlemonsters.challenge.controller</a> &gt; <span class="el_source">BattleExtendedController.java</span></div><h1>BattleExtendedController.java</h1><pre class="source lang-java linenums">package co.fullstacklabs.battlemonsters.challenge.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import co.fullstacklabs.battlemonsters.challenge.dto.BattleDTO;
+import co.fullstacklabs.battlemonsters.challenge.dto.MonsterDTO;
+import co.fullstacklabs.battlemonsters.challenge.service.BattleService;
+import co.fullstacklabs.battlemonsters.challenge.service.MonsterService;
+
+
+@RestController
+@RequestMapping(&quot;/battle&quot;)
+<span class="nc" id="L21">public class BattleExtendedController {</span>
+
+    @Autowired
+    private BattleService battleService;
+    
+    @Autowired
+    private MonsterService monsterService;
+	
+	@PostMapping(&quot;/start&quot;)
+    public ResponseEntity&lt;BattleDTO&gt; startBattle(@RequestParam(value=&quot;idMonsterA&quot;) String id_monsterA, @RequestParam(value=&quot;idMonsterB&quot;) String id_monsterB) {
+        
+<span class="nc" id="L32">		MonsterDTO monsterA = monsterService.findById(Integer.parseInt(id_monsterA));</span>
+<span class="nc" id="L33">		MonsterDTO monsterB = monsterService.findById(Integer.parseInt(id_monsterB));</span>
+		
+<span class="nc" id="L35">		BattleDTO battleStarted = new BattleDTO();</span>
+		
+<span class="nc" id="L37">		battleStarted.setMonsterA(monsterA);</span>
+<span class="nc" id="L38">		battleStarted.setMonsterB(monsterB);</span>
+		
+<span class="nc" id="L40">		return new ResponseEntity&lt;&gt;(battleService.startBattle(battleStarted), HttpStatus.CREATED);		</span>
+		
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public boolean delete(@PathVariable String id)  {
+<span class="nc" id="L46">        return this.battleService.delete(Integer.parseInt(id));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
